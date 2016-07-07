@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableMap;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -122,9 +123,10 @@ public class ContactsProvider {
             }
         }
 
-        Contact[] contacts = contacts.values().toArray()
+        Contact[] contacts = (Contact[]) contactsMap.values().toArray();
 
-        WritableMap contact = contacts.length > 0 ? contacts[0] : Arguments.createMap()
+        WritableMap contact = contacts.length > 0 ?
+            contacts[0].toMap() : Arguments.createMap();
 
         return null;
     }
