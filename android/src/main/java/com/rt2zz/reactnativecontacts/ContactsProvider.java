@@ -100,6 +100,35 @@ public class ContactsProvider {
         return contacts;
     }
 
+    public WritableMap getContact(ReadableMap options) {
+        String id = options.hasKey("id") ? options.getString("id") : null;
+
+        Map<String, Contact> contactsMap;
+        {
+            Cursor cursor = contentResolver.query(
+                    ContactsContract.Data.CONTENT_URI,
+                    null,
+                    ContactsContract.Contacts._ID + " = ?",
+                    new String[]{id},
+                    null
+            );
+
+            try {
+                contactsMap = loadContactsFrom(cursor);
+            } finally {
+              if (cursor != null) {
+                cursor.close();
+              }
+            }
+        }
+
+        Contact[] contacts = contacts.values().toArray()
+
+        WritableMap contact = contacts.length > 0 ? contacts[0] : Arguments.createMap()
+
+        return null;
+    }
+
     @NonNull
     private Map<String, Contact> loadContactsFrom(Cursor cursor) {
 

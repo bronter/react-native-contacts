@@ -43,6 +43,20 @@ public class ContactsManager extends ReactContextBaseJavaModule {
   }
 
   /*
+   * Returns the first contact that matches all of the fields in options
+   * queries CommonDataKinds.Contactables to get phones and emails
+   */
+  @ReactMethod
+  public void getOne(ReadableMap options, Callback callback) {
+    ContentResolver cr = getReactApplicationContext().getContentResolver();
+
+    ContactsProvider contactsProvider = new ContactsProvider(cr);
+    WritableMap contact = contactsProvider.getContact(options);
+
+    callback.invoke(null, contact);
+  }
+
+  /*
    * Adds contact to phone's addressbook
    */
   @ReactMethod
