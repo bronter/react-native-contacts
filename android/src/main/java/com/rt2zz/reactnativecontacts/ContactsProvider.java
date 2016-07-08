@@ -13,6 +13,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.ReadableMap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -123,10 +124,10 @@ public class ContactsProvider {
             }
         }
 
-        Contact[] contacts = (Contact[]) contactsMap.values().toArray();
+        List<Contact> contacts = (List<Contact>)(List<?>) Arrays.asList(contactsMap.values().toArray());
 
-        WritableMap contact = contacts.length > 0 ?
-            contacts[0].toMap() : Arguments.createMap();
+        WritableMap contact = contacts.size() > 0 ?
+            contacts.get(0).toMap() : Arguments.createMap();
 
         return null;
     }
